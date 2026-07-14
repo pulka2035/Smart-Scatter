@@ -43,6 +43,7 @@ class SMART_SCATTER_PT_mainPanel(bpy.types.Panel):
 
         column_settings_box.prop(settings, "density")
         column_settings_box.prop(settings, "count")
+        column_settings_box.prop(settings, "minimum_distance")
         column_settings_box.prop(settings, "seed")
 
 
@@ -52,14 +53,21 @@ class SMART_SCATTER_PT_mainPanel(bpy.types.Panel):
         area_box = layout.box()
         area_box.label(text="  Area")
 
+        area_box.prop(settings, "area_shape")
+
+
         column_area_box = area_box.column(align=True)
         column_area_box.use_property_split = True
         column_area_box.use_property_decorate = False
 
-        column_area_box.prop(settings, "width")
-        column_area_box.prop(settings, "depth")
-        column_area_box.prop(settings, "radius")
+        if settings.area_shape == "RECTANGLE":
+            column_area_box.prop(settings, "width")
+            column_area_box.prop(settings, "depth")
+        
+        elif settings.area_shape == "CIRCLE":
+            column_area_box.prop(settings, "radius")
 
+        
 
 
         # Transform

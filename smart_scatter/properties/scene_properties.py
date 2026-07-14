@@ -64,27 +64,30 @@ class SMART_SCATTER_Settings(bpy.types.PropertyGroup):
 
     delta_rotation_x: bpy.props.FloatProperty(
         name = "X",
-        default = 15.0,
-        min = 0.0,
-        max = 360.0
+        default = 0,
+        min = 0,
+        max = 360,
+        subtype="ANGLE"
     )
 
     delta_rotation_y: bpy.props.FloatProperty(
         name = "Y",
-        default = 15.0,
-        min = 0.0,
-        max = 360.0
+        default = 0,
+        min = 0,
+        max = 360,
+        subtype="ANGLE"
     )
 
     delta_rotation_z: bpy.props.FloatProperty(
         name = "Z",
-        default = 15.0,
-        min = 0.0,
-        max = 360.0
+        default = 0,
+        min = 0,
+        max = 360,
+        subtype="ANGLE"
     )
 
     align_to_surface: bpy.props.BoolProperty(
-        name = "Align to Srface",
+        name = "Align to Surface",
         default = True
     )
 
@@ -92,6 +95,29 @@ class SMART_SCATTER_Settings(bpy.types.PropertyGroup):
         name = "Offset",
         default = 0.1,
         min = 0
+    )
+
+    output_collection: bpy.props.PointerProperty(
+        name="Output Collection",
+        type=bpy.types.Collection
+    )   
+
+    minimum_distance: bpy.props.FloatProperty(
+        name="Min Distance",
+        default=2.0,
+        min=0
+    )
+
+    area_shape: bpy.props.EnumProperty(
+        name="Shape",
+        items=[
+            ("RECTANGLE", "Rectangle", ""),
+            ("CIRCLE", "Circle", ""),
+            # ("SQUARE", "Square", ""),
+            # ("ELIPSE", "Elipse", ""),
+            # ("POLYGON", "Polygon", "")
+        ],
+        default="RECTANGLE"
     )
 
 

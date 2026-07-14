@@ -5,8 +5,8 @@ class SMART_SCATTER_OT_generate(bpy.types.Operator):
     bl_idname = "smart_scatter.generate"
     bl_label = "Generate Scatter"
 
-    def execute(self, context):
-        return {'FINISHED'}
+    def execute():
+        pass
 
 classes = (
     SMART_SCATTER_OT_generate,
