@@ -1,12 +1,18 @@
 import bpy
 
+# from ..core.scatter import ScatterGenerator
+
 class SMART_SCATTER_OT_generate(bpy.types.Operator):
 
     bl_idname = "smart_scatter.generate"
     bl_label = "Generate Scatter"
 
-    def execute():
+    def execute(self, context):
         pass
+        # generator = ScatterGenerator(context)
+        # generator.generate()
+
+        # return {'FINISHED'}
 
 classes = (
     SMART_SCATTER_OT_generate,

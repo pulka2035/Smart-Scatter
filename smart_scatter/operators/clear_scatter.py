@@ -5,7 +5,7 @@ class SMART_SCATTER_OT_clear(bpy.types.Operator):
     bl_idname = "smart_scatter.clear"
     bl_label = "Clear"
 
-    def execute():
+    def execute(self, context):
         pass
     
 classes = (
