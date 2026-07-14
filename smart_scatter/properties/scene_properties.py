@@ -1,0 +1,114 @@
+# pyright: reportInvalidTypeForm=false
+import bpy
+
+class SMART_SCATTER_Settings(bpy.types.PropertyGroup):
+
+    surface_object: bpy.props.PointerProperty(
+        name = "Surface Object",
+        type = bpy.types.Object
+    )
+
+    asset_collection: bpy.props.PointerProperty(
+        name = "Asset Collection",
+        type = bpy.types.Collection
+    )
+
+    count: bpy.props.IntProperty(
+        name = "Count",
+        default = 100,
+        min = 1,
+        max = 100000
+    )
+
+    density: bpy.props.FloatProperty(
+        name = "Density",
+        default = 0.5,
+        min = 0.0,
+        max = 1.0
+    )
+
+    seed: bpy.props.IntProperty(
+        name = "Seed",
+        default = 1234
+    )
+
+    width: bpy.props.FloatProperty(
+        name = "Width",
+        default = 20.0,
+        min = 1.0
+    )
+
+    depth: bpy.props.FloatProperty(
+        name = "Depth",
+        default = 20.0,
+        min = 1.0
+    )
+
+    radius: bpy.props.FloatProperty(
+        name = "Radius",
+        default = 20.0,
+        min = 1.0
+    )
+
+    scale_max: bpy.props.FloatProperty(
+        name = "Max",
+        default = 1.2,
+        min = 0
+    )
+
+    scale_min: bpy.props.FloatProperty(
+        name = "Min",
+        default = 0.8,
+        min = 0
+    )
+
+    delta_rotation_x: bpy.props.FloatProperty(
+        name = "X",
+        default = 15.0,
+        min = 0.0,
+        max = 360.0
+    )
+
+    delta_rotation_y: bpy.props.FloatProperty(
+        name = "Y",
+        default = 15.0,
+        min = 0.0,
+        max = 360.0
+    )
+
+    delta_rotation_z: bpy.props.FloatProperty(
+        name = "Z",
+        default = 15.0,
+        min = 0.0,
+        max = 360.0
+    )
+
+    align_to_surface: bpy.props.BoolProperty(
+        name = "Align to Srface",
+        default = True
+    )
+
+    offset: bpy.props.FloatProperty(
+        name = "Offset",
+        default = 0.1,
+        min = 0
+    )
+
+
+classes = (
+    SMART_SCATTER_Settings,
+)
+
+def register():
+    for cls in classes:
+        bpy.utils.register_class(cls)
+    
+    bpy.types.Scene.smart_scatter = bpy.props.PointerProperty(
+        type=SMART_SCATTER_Settings
+        )
+
+def unregister():
+    del bpy.types.Scene.smart_scatter
+
+    for cls in classes:
+        bpy.utils.unregister_class(cls)
