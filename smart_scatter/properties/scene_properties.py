@@ -1,6 +1,12 @@
 # pyright: reportInvalidTypeForm=false
 import bpy
 
+def update_area_size(self, context):
+
+    from ..core.preview_manager import get_preview_manager
+    manager = get_preview_manager()
+    manager.update(self)
+
 class SMART_SCATTER_Settings(bpy.types.PropertyGroup):
 
     surface_object: bpy.props.PointerProperty(
@@ -33,21 +39,25 @@ class SMART_SCATTER_Settings(bpy.types.PropertyGroup):
     )
 
     width: bpy.props.FloatProperty(
-        name = "Width",
-        default = 20.0,
-        min = 1.0
+        name="Width",
+        default=20.0,
+        min=1.0,
+        update=update_area_size
     )
 
+
     depth: bpy.props.FloatProperty(
-        name = "Depth",
-        default = 20.0,
-        min = 1.0
+        name="Depth",
+        default=20.0,
+        min=1.0,
+        update=update_area_size
     )
 
     radius: bpy.props.FloatProperty(
-        name = "Radius",
-        default = 20.0,
-        min = 1.0
+        name="Radius",
+        default=5.0,
+        min = 1.0,
+        update=update_area_size
     )
 
     scale_max: bpy.props.FloatProperty(
@@ -119,6 +129,25 @@ class SMART_SCATTER_Settings(bpy.types.PropertyGroup):
         ],
         default="RECTANGLE"
     )
+
+    area_center: bpy.props.FloatVectorProperty(
+        name="Area Center",
+        size=3,
+        subtype='XYZ',
+        default=(0.0, 0.0, 0.0)
+    )
+
+    area_normal: bpy.props.FloatVectorProperty(
+        size=3,
+        default=(0,0,1)
+    )
+
+    area_object: bpy.props.PointerProperty(
+        name="Area Object",
+        type=bpy.types.Object
+    )
+
+    
 
 
 classes = (

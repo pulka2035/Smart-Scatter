@@ -7,6 +7,8 @@ bl_info = {
     "description": "Procedural asset scattering tool"
 }
 
+print("SMART SCATTER FROM F DRIVE")
+
 # import bpy
 from . import properties
 from . import ui

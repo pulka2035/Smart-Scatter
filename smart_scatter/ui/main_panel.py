@@ -53,8 +53,13 @@ class SMART_SCATTER_PT_mainPanel(bpy.types.Panel):
         area_box = layout.box()
         area_box.label(text="  Area")
 
-        area_box.prop(settings, "area_shape")
+        row = area_box.row()
+        row.enabled = settings.surface_object is not None
+        row.operator("smart_scatter.pick_area", text="Pick Area Center")
 
+        area_box.prop(settings, "area_center")
+        area_box.prop(settings, "area_shape")
+        
 
         column_area_box = area_box.column(align=True)
         column_area_box.use_property_split = True
@@ -67,7 +72,7 @@ class SMART_SCATTER_PT_mainPanel(bpy.types.Panel):
         elif settings.area_shape == "CIRCLE":
             column_area_box.prop(settings, "radius")
 
-        
+
 
 
         # Transform
