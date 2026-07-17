@@ -215,7 +215,6 @@ class ScatterPreview:
         faces = []
 
         vertex_map = {}
-        # создаем вершины
 
         for y in range(resolution_y + 1):
             py = (
@@ -247,7 +246,6 @@ class ScatterPreview:
                     )
                 )
 
-        # создаем полигоны
         for y in range(resolution_y):
 
             for x in range(resolution_x):
