@@ -1,6 +1,8 @@
 import bpy
 
 from ..core.scatter import ScatterGenerator
+from ..core.preview_manager import get_preview_manager
+
 
 
 class SMART_SCATTER_OT_generate(bpy.types.Operator):
@@ -12,6 +14,12 @@ class SMART_SCATTER_OT_generate(bpy.types.Operator):
 
         generator = ScatterGenerator(context)
         generator.generate()
+
+        manager = get_preview_manager()
+
+        if manager.preview:
+            manager.preview.remove()
+            manager.stop()
 
         return {'FINISHED'}
 

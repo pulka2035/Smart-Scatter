@@ -7,6 +7,7 @@ class ScatterPreview:
     GRID_SIZE = 1.0
     MIN_RESOLUTION = 5
     MAX_RESOLUTION = 100
+    PREVIEW_CIRCLE_SEGMENTS = 64
 
 
     def __init__(self):
@@ -137,11 +138,8 @@ class ScatterPreview:
 
         if settings.area_shape == "CIRCLE":
 
-            verts, faces = self.build_grid(
-                settings.radius * 2,
-                settings.radius * 2,
-                shape="CIRCLE",
-                radius=settings.radius
+            verts, faces = self.build_circle(
+                settings.radius
             )
 
         elif settings.area_shape == "RECTANGLE":
@@ -160,6 +158,16 @@ class ScatterPreview:
             faces,
             location,
             normal
+        )
+        self.area.show_in_front = True
+        self.area.show_wire = True
+        self.area.show_all_edges = True
+
+        self.area.color = (
+            1.0,
+            0.3,
+            0.0,
+            1.0
         )
 
         self.last_shape = settings.area_shape
@@ -184,6 +192,9 @@ class ScatterPreview:
             name,
             mesh
         )
+        obj.show_in_front = True
+        material = self.create_preview_material()
+        obj.data.materials.append(material)
         obj.location = location + normal * 0.05
         self.collection.objects.link(obj)
         return obj
@@ -312,3 +323,58 @@ class ScatterPreview:
             )
 
         self.collection = None
+
+    def create_preview_material(self):
+
+        mat = bpy.data.materials.new(
+            "Scatter Preview Material"
+        )
+        mat.diffuse_color = (
+            1.0,
+            0.3,
+            0.0,
+            0.35
+        )
+        mat.use_nodes = True
+        bsdf = mat.node_tree.nodes.get(
+            "Principled BSDF"
+        )
+        bsdf.inputs["Base Color"].default_value = (
+            1.0,
+            0.3,
+            0.0,
+            1
+        )
+        bsdf.inputs["Alpha"].default_value = 0.35
+        mat.surface_render_method = 'DITHERED'
+
+        return mat
+    def build_circle(self, radius):
+
+        verts = []
+        faces = []
+        verts.append((0,0,0))
+        for i in range(64):
+            angle = math.tau * i / 64
+            x = math.cos(angle) * radius
+            y = math.sin(angle) * radius
+
+            verts.append(
+                (
+                    x,
+                    y,
+                    0
+                )
+            )
+
+
+        for i in range(64):
+            faces.append(
+                (
+                    0,
+                    i + 1,
+                    (i + 1) % 64 + 1
+                )
+            )
+
+        return verts, faces

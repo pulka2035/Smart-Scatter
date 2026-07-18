@@ -1,5 +1,9 @@
 
 import bpy
+import random
+from mathutils import Quaternion
+from mathutils import Euler
+
 
 from .scatter_points import generate_points
 from .placement import project_point_to_surface
@@ -20,13 +24,15 @@ class ScatterGenerator:
         points = generate_points(
             self.settings
         )
-        print("POINT COUNT:", len(points))
-        print(points[:5])
-        assets = self.get_assets()
 
-        for point in points:
-            
-            asset = assets[0]
+        assets = self.get_assets()
+        distribution = self.choose_assets(assets)
+
+        if len(distribution) < len(points):
+            print("Not enough assets in distribution")
+            return
+        for point, asset in zip(points, distribution):
+
             self.spawn_object(
                 asset,
                 point["location"],
@@ -71,33 +77,31 @@ class ScatterGenerator:
 
 
     def choose_assets(self, assets):
-        count = self.settings.count
 
+        count = self.settings.count
         if not assets:
             return []
-        
-        total_weight = 0
-        assets_weight = {}
-
-        for asset in assets:
-            weight = 1
-            assets_weight[asset] = weight
-            total_weight += 1
 
         result = []
-        
-        for asset in assets:
-            percentage = assets_weight[asset] / total_weight
-            amount = round(percentage * count)
+        amount_per_asset = count // len(assets)
+        remainder = count % len(assets)
 
-            result.append(
-                {
-                    "asset": asset,
-                    "amount": amount,
-                    "weight": assets_weight[asset]
-                }
-            )
-            return result
+
+        for asset in assets:
+
+            amount = amount_per_asset
+
+            if remainder > 0:
+                amount += 1
+                remainder -= 1
+
+
+            for i in range(amount):
+                result.append(asset)
+
+
+        random.shuffle(result)
+        return result
 
 
 
@@ -117,9 +121,65 @@ class ScatterGenerator:
 
         obj.rotation_mode = 'QUATERNION'
 
-        obj.rotation_quaternion = normal.to_track_quat(
+
+        # 1. Ставим объект по нормали поверхности
+        surface_rotation = normal.to_track_quat(
             'Z',
             'Y'
+        )
+
+
+        # 2. Случайный поворот только вокруг нормали
+        random_angle = random.uniform(
+            -self.settings.delta_rotation_z,
+            self.settings.delta_rotation_z
+        )
+
+        random_rotation = Quaternion(
+            normal,
+            random_angle
+        )
+
+
+        # 3. Дополнительный random tilt по X/Y
+        delta_x = random.uniform(
+            -self.settings.delta_rotation_x,
+            self.settings.delta_rotation_x
+        )
+
+        delta_y = random.uniform(
+            -self.settings.delta_rotation_y,
+            self.settings.delta_rotation_y
+        )
+
+
+        delta_rotation = Euler(
+            (
+                delta_x,
+                delta_y,
+                0
+            ),
+            'XYZ'
+        ).to_quaternion()
+
+
+        obj.rotation_quaternion = (
+            surface_rotation
+            @ random_rotation
+            @ delta_rotation
+        )
+
+
+        # Scale
+        scale = random.uniform(
+            self.settings.scale_min,
+            self.settings.scale_max
+        )
+
+        obj.scale = (
+            scale,
+            scale,
+            scale
         )
 
 

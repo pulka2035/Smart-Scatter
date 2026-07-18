@@ -73,26 +73,27 @@ class SMART_SCATTER_Settings(bpy.types.PropertyGroup):
     )
 
     delta_rotation_x: bpy.props.FloatProperty(
-        name = "X",
-        default = 0,
-        min = 0,
-        max = 360,
+        name="X",
+        default=0,
+        min=-3.14159,
+        max=3.14159,
         subtype="ANGLE"
     )
 
     delta_rotation_y: bpy.props.FloatProperty(
-        name = "Y",
-        default = 0,
-        min = 0,
-        max = 360,
+        name="Y",
+        default=0,
+        min=-3.14159,
+        max=3.14159,
         subtype="ANGLE"
     )
 
+
     delta_rotation_z: bpy.props.FloatProperty(
-        name = "Z",
-        default = 0,
-        min = 0,
-        max = 360,
+        name="Z",
+        default=0,
+        min=-3.14159,
+        max=3.14159,
         subtype="ANGLE"
     )
 
