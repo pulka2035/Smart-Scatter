@@ -18,7 +18,9 @@ class SMART_SCATTER_OT_generate(bpy.types.Operator):
         manager = get_preview_manager()
 
         if manager.preview:
+            preview_collection = bpy.data.collections.get("Smart_Scatter_Preview")
             manager.preview.remove()
+            bpy.data.collections.remove(preview_collection)
             manager.stop()
 
         return {'FINISHED'}

@@ -6,7 +6,16 @@ class SMART_SCATTER_OT_clear(bpy.types.Operator):
     bl_label = "Clear"
 
     def execute(self, context):
-        pass
+        output_collection = bpy.data.collections.get("Scatter_Output")
+        output_objects = output_collection.objects
+
+        if output_collection is None:
+            return {'CANCELLED'}
+
+        for obj in list(output_collection.objects):
+            bpy.data.objects.remove(obj, do_unlink=True)
+        bpy.data.collections.remove(output_collection)
+        return {'FINISHED'}
     
 classes = (
     SMART_SCATTER_OT_clear,

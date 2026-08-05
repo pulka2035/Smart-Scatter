@@ -41,10 +41,10 @@ class SMART_SCATTER_PT_mainPanel(bpy.types.Panel):
         column_settings_box.use_property_split = True
         column_settings_box.use_property_decorate = False
 
-        column_settings_box.prop(settings, "density")
+        # column_settings_box.prop(settings, "density")
         column_settings_box.prop(settings, "count")
-        column_settings_box.prop(settings, "minimum_distance")
-        column_settings_box.prop(settings, "seed")
+        # column_settings_box.prop(settings, "minimum_distance")
+        # column_settings_box.prop(settings, "seed")
 
 
 
@@ -96,11 +96,11 @@ class SMART_SCATTER_PT_mainPanel(bpy.types.Panel):
         column_transform_box_2.prop(settings, "delta_rotation_z")
 
         # Alignment
-        alignment_box = layout.box()
-        alignment_box.label(text="  Alignment")
+        # alignment_box = layout.box()
+        # alignment_box.label(text="  Alignment")
 
-        alignment_box.prop(settings, "align_to_surface")
-        alignment_box.prop(settings, "offset")
+        # alignment_box.prop(settings, "align_to_surface")
+        # alignment_box.prop(settings, "offset")
 
         #Generate Scatter
         layout.separator()

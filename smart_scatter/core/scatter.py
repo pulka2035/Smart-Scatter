@@ -122,14 +122,12 @@ class ScatterGenerator:
         obj.rotation_mode = 'QUATERNION'
 
 
-        # 1. Ставим объект по нормали поверхности
         surface_rotation = normal.to_track_quat(
             'Z',
             'Y'
         )
 
 
-        # 2. Случайный поворот только вокруг нормали
         random_angle = random.uniform(
             -self.settings.delta_rotation_z,
             self.settings.delta_rotation_z
@@ -141,7 +139,7 @@ class ScatterGenerator:
         )
 
 
-        # 3. Дополнительный random tilt по X/Y
+
         delta_x = random.uniform(
             -self.settings.delta_rotation_x,
             self.settings.delta_rotation_x
@@ -170,7 +168,6 @@ class ScatterGenerator:
         )
 
 
-        # Scale
         scale = random.uniform(
             self.settings.scale_min,
             self.settings.scale_max
