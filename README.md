@@ -34,55 +34,6 @@
 
 ![Smart Scatter UI](images/UI.jpg)
 
-Структура интерфейса:
-
-```
-Smart Scatter
-
-├── Surface
-│   └── Object
-│       ├── Object Picker
-│       └── Eyedropper
-│
-├── Assets
-│   └── Collection
-│
-├── Scatter Settings
-│   └── Count
-│
-├── Area
-│   ├── Pick Area Center
-│   ├── Area Center
-│   │   ├── X
-│   │   ├── Y
-│   │   └── Z
-│   │
-│   ├── Shape
-│   │   ├── Rectangle
-│   │   └── Circle
-│   │
-│   ├── Rectangle
-│   │   ├── Width
-│   │   └── Depth
-│   │
-│   └── Circle
-│       └── Radius
-│
-├── Transform
-│   ├── Scale
-│   │   ├── Min
-│   │   └── Max
-│   │
-│   └── Rotation
-│       ├── X
-│       ├── Y
-│       └── Z
-│
-├── Generate Scatter
-│
-└── Clear
-```
-
 ---
 
 # Использование
